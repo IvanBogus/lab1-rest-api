@@ -1,4 +1,4 @@
-# Student API (Node.js + Express)
+# lab1-rest-api
 
 Простий серверний вебзастосунок для обліку студентів, реалізований у межах лабораторної роботи з дисципліни **"Технології розроблення серверного ПЗ (Back-end)"**.
 
@@ -25,9 +25,9 @@
 ### 1. Клонувати репозиторій
 
 ```bash
-git clone https://github.com/IvanBogus/IO-35_appWEB-Bohuslavets-Ivan-FIOT-2026.git
+git clone https://github.com/IvanBogus/lab1-rest-api.git
 
-cd IO-35_appWEB-Bohuslavets-Ivan-FIOT-2026
+cd lab1-rest-api
 ```
 
 ### 2. Встановити залежності
@@ -39,12 +39,12 @@ npm install
 ### 3. Запустити сервер
 
 ```bash
-node server.js
+npm start
 ```
 
 Після запуску сервер буде доступний за адресою:
 ```bash
-http://localhost:300
+http://localhost:3000
 ```
 
 ---
@@ -54,6 +54,10 @@ http://localhost:300
 ### GET /students
 
 Отримати список усіх студентів
+
+### GET /students/:id
+
+Отримати одного студента за `id`
 
 ### POST /students
 

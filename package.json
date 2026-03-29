@@ -2,14 +2,22 @@
   "dependencies": {
     "express": "^5.2.1"
   },
-  "name": "io-35_appweb-bohuslavets-ivan-fiot-2026",
+  "name": "lab1-rest-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ivan Bohuslavets",
   "license": "ISC",
-  "description": ""
+  "description": "Простий серверний вебзастосунок для обліку студентів, реалізований у межах лабораторної роботи з дисципліни **\"Технології розроблення серверного ПЗ (Back-end)\"**.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IvanBogus/lab1-rest-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IvanBogus/lab1-rest-api/issues"
+  },
+  "homepage": "https://github.com/IvanBogus/lab1-rest-api#readme"
 }
