@@ -1,131 +1,38 @@
+require("dotenv").config();
 const express = require("express");
+const legacyStudentsRoutes = require("./routes/legacy/students");
+const mysql2GroupsRoutes = require("./routes/mysql2/groups");
+const mysql2StudentsRoutes = require("./routes/mysql2/students");
+const sequelizeGroupsRoutes = require("./routes/sequelize/groups");
+const sequelizeStudentsRoutes = require("./routes/sequelize/students");
+const { authenticateSequelize } = require("./models");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Middleware для роботи з JSON
 app.use(express.json());
 
-// Тестовий маршрут
 app.get("/", (req, res) => {
-  res.send("Server is working 🚀");
+  res.send("StudentLab API is running");
 });
 
-// Тимчасове "сховище" студентів
-let students = [
-  { id: 1, name: "Іван Петренко", group: "ІО-31" },
-  { id: 2, name: "Марія Коваль", group: "ІО-32" }
-];
+app.use("/api/legacy/students", legacyStudentsRoutes);
+app.use("/api/mysql2/groups", mysql2GroupsRoutes);
+app.use("/api/mysql2/students", mysql2StudentsRoutes);
+app.use("/api/sequelize/groups", sequelizeGroupsRoutes);
+app.use("/api/sequelize/students", sequelizeStudentsRoutes);
 
-
-// =======================
-// GET — отримати всіх студентів
-// =======================
-app.get("/students", (req, res) => {
-  res.json(students);
-});
-
-// =======================
-// GET - get a student by id
-// =======================
-app.get("/students/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const student = students.find(s => s.id === id);
-
-  if (!student) {
-    return res.status(404).json({
-      message: "Студента не знайдено"
-    });
+async function startServer() {
+  try {
+    await authenticateSequelize();
+    console.log("Sequelize connection is ready");
+  } catch (error) {
+    console.error("Sequelize authentication failed:", error.message);
   }
 
-  res.json(student);
-});
-
-
-// =======================
-// POST — додати студента
-// =======================
-app.post("/students", (req, res) => {
-  const { id, name, group } = req.body;
-
-  // базова валідація
-  if (id === undefined || !name || !group) {
-    return res.status(400).json({
-      message: "Потрібно передати id, name, group"
-    });
-  }
-
-  // перевірка на унікальний id
-  const exists = students.find(s => s.id === id);
-
-  if (exists) {
-    return res.status(409).json({
-      message: "Студент з таким id вже існує"
-    });
-  }
-
-  const newStudent = { id, name, group };
-  students.push(newStudent);
-
-  res.status(201).json({
-    message: "Студента додано",
-    student: newStudent
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
   });
-});
+}
 
-
-// =======================
-// PUT — оновити студента
-// =======================
-app.put("/students/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const { name, group } = req.body;
-
-  const student = students.find(s => s.id === id);
-
-  if (!student) {
-    return res.status(404).json({
-      message: "Студента не знайдено"
-    });
-  }
-
-  if (name) student.name = name;
-  if (group) student.group = group;
-
-  res.json({
-    message: "Студента оновлено",
-    student
-  });
-});
-
-
-// =======================
-// DELETE — видалити студента
-// =======================
-app.delete("/students/:id", (req, res) => {
-  const id = Number(req.params.id);
-
-  const index = students.findIndex(s => s.id === id);
-
-  if (index === -1) {
-    return res.status(404).json({
-      message: "Студента не знайдено"
-    });
-  }
-
-  const deletedStudent = students[index];
-  students.splice(index, 1);
-
-  res.json({
-    message: "Студента видалено",
-    student: deletedStudent
-  });
-});
-
-
-// =======================
-// Запуск сервера
-// =======================
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+startServer();
