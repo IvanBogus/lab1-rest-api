@@ -3,8 +3,8 @@ const express = require("express");
 const router = express.Router();
 
 let students = [
-  { id: 1, name: "Іван Петренко", group: "ІО-31" },
-  { id: 2, name: "Марія Коваль", group: "ІО-32" }
+  { id: 1, name: "Р†РІР°РЅ РџРµС‚СЂРµРЅРєРѕ", group: "Р†Рћ-31" },
+  { id: 2, name: "РњР°СЂС–СЏ РљРѕРІР°Р»СЊ", group: "Р†Рћ-32" }
 ];
 
 router.get("/", (req, res) => {
@@ -17,7 +17,7 @@ router.get("/:id", (req, res) => {
 
   if (!student) {
     return res.status(404).json({
-      message: "Студента не знайдено"
+      message: "РЎС‚СѓРґРµРЅС‚Р° РЅРµ Р·РЅР°Р№РґРµРЅРѕ"
     });
   }
 
@@ -29,7 +29,7 @@ router.post("/", (req, res) => {
 
   if (id === undefined || !name || !group) {
     return res.status(400).json({
-      message: "Потрібно передати id, name, group"
+      message: "РџРѕС‚СЂС–Р±РЅРѕ РїРµСЂРµРґР°С‚Рё id, name, group"
     });
   }
 
@@ -37,7 +37,7 @@ router.post("/", (req, res) => {
 
   if (exists) {
     return res.status(409).json({
-      message: "Студент з таким id вже існує"
+      message: "РЎС‚СѓРґРµРЅС‚ Р· С‚Р°РєРёРј id РІР¶Рµ С–СЃРЅСѓС”"
     });
   }
 
@@ -45,7 +45,7 @@ router.post("/", (req, res) => {
   students.push(newStudent);
 
   res.status(201).json({
-    message: "Студента додано",
+    message: "РЎС‚СѓРґРµРЅС‚Р° РґРѕРґР°РЅРѕ"
     student: newStudent
   });
 });
@@ -57,7 +57,7 @@ router.put("/:id", (req, res) => {
 
   if (!student) {
     return res.status(404).json({
-      message: "Студента не знайдено"
+      message: "РЎС‚СѓРґРµРЅС‚Р° РЅРµ Р·РЅР°Р№РґРµРЅРѕ"
     });
   }
 
@@ -65,7 +65,7 @@ router.put("/:id", (req, res) => {
   if (group) student.group = group;
 
   res.json({
-    message: "Студента оновлено",
+    message: "РЎС‚СѓРґРµРЅС‚Р° РѕРЅРѕРІР»РµРЅРѕ"
     student
   });
 });
@@ -76,7 +76,7 @@ router.delete("/:id", (req, res) => {
 
   if (index === -1) {
     return res.status(404).json({
-      message: "Студента не знайдено"
+      message: "РЎС‚СѓРґРµРЅС‚Р° РЅРµ Р·РЅР°Р№РґРµРЅРѕ"
     });
   }
 
@@ -84,7 +84,7 @@ router.delete("/:id", (req, res) => {
   students.splice(index, 1);
 
   res.json({
-    message: "Студента видалено",
+    message: "РЎС‚СѓРґРµРЅС‚Р° РІРёРґР°Р»РµРЅРѕ"
     student: deletedStudent
   });
 });
