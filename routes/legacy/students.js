@@ -45,7 +45,7 @@ router.post("/", (req, res) => {
   students.push(newStudent);
 
   res.status(201).json({
-    message: "Студента додано"
+    message: "Студента додано",
     student: newStudent
   });
 });
@@ -65,7 +65,7 @@ router.put("/:id", (req, res) => {
   if (group) student.group = group;
 
   res.json({
-    message: "Студента оновлено"
+    message: "Студента оновлено",
     student
   });
 });
@@ -84,9 +84,13 @@ router.delete("/:id", (req, res) => {
   students.splice(index, 1);
 
   res.json({
-    message: "Студента видалено"
+    message: "Студента видалено",
     student: deletedStudent
   });
 });
 
 module.exports = router;
+
+
+
+
