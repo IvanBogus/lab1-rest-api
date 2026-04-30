@@ -5,7 +5,9 @@ const mysql2GroupsRoutes = require("./routes/mysql2/groups");
 const mysql2StudentsRoutes = require("./routes/mysql2/students");
 const sequelizeGroupsRoutes = require("./routes/sequelize/groups");
 const sequelizeStudentsRoutes = require("./routes/sequelize/students");
+const authRoutes = require("./routes/auth");
 const { authenticateSequelize } = require("./models");
+const errorMiddleware = require("./middleware/errorMiddleware");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +23,8 @@ app.use("/api/mysql2/groups", mysql2GroupsRoutes);
 app.use("/api/mysql2/students", mysql2StudentsRoutes);
 app.use("/api/sequelize/groups", sequelizeGroupsRoutes);
 app.use("/api/sequelize/students", sequelizeStudentsRoutes);
+app.use("/api/auth", authRoutes);
+app.use(errorMiddleware);
 
 async function startServer() {
   try {
